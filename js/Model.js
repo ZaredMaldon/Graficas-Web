@@ -1,0 +1,1 @@
+//aqui ira los metodos del modelo

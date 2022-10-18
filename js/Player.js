@@ -1,0 +1,1 @@
+//aqui iran los metodos del jugador

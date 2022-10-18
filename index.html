@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">//Aqui ira todo lo relacionado al juego, dejo lo de la practica 9 de ejemplo jeje
+      import * as THREE from "./librerias/three.module.js";
+      import { OrbitControls } from "./librerias/OrbitControls.js";
+      import { GLTFLoader } from "./librerias/GLTFLoader.js";
+      
+
+      // SCENE
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color("#34495E");
+
+      const camera = new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth / window.innerHeight
+      );
+
+      camera.position.set(0, 0, 10);
+
+      // RENDERER
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      document.body.appendChild(renderer.domElement);
+
+      // Lights
+      const hemispherelight = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+      //scene.add(hemispherelight);
+
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(1, 5, -1);
+      directionalLight.castShadow = true;
+
+      const cube1Geometry = new THREE.BoxGeometry(1, 1, 1);
+      const cube1Material = new THREE.MeshPhongMaterial({ color: "aqua" });
+      const cube1 = new THREE.Mesh(cube1Geometry, cube1Material);
+      cube1.castShadow = true;
+      cube1.position.set(3, 0, 0);
+
+      let cube1BB = new THREE.Box3();
+      cube1BB.setFromObject(cube1);
+      //console.log(cube1BB);
+
+      // const bb = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+      // const object = new THREE.Mesh(bb, new THREE.MeshBasicMaterial(0xff0000));
+      // object.position.set(3, 0, 0);
+      // const box = new THREE.BoxHelper(object, 0xff0000);
+
+      const cube2Geometry = new THREE.BoxGeometry(1, 1, 1);
+      const cube2Material = new THREE.MeshPhongMaterial({ color: "coral" });
+      const cube2 = new THREE.Mesh(cube2Geometry, cube2Material);
+      cube2.position.set(-3, 0, 0);
+      cube2.castShadow = true;
+      //cube2.receiveShadow = true;
+
+      let cube2BB = new THREE.Box3();
+      cube2BB.setFromObject(cube2);
+
+      const sphereGeometry = new THREE.SphereGeometry(1);
+      const sphereMaterial = new THREE.MeshPhongMaterial({ color: "teal" });
+      const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      sphere.castShadow = true;
+      sphere.position.set(0, 0, 0);
+
+      let sphereBB = new THREE.Sphere(sphere.position, 1);
+
+      // Plane
+      const planeGeometry = new THREE.PlaneGeometry(50, 50);
+      const planeMaterial = new THREE.MeshStandardMaterial({ color: "slategrey" });
+      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+      plane.position.set(0, -0.5, 0);
+      plane.receiveShadow = true;
+      plane.rotateX(-Math.PI / 2);
+
+      // Adding to scene
+      scene.add(cube1, cube2, sphere, plane, hemispherelight, directionalLight);
+
+      document.onkeydown = function (e) {
+        // console.log(e);
+        if (e.keyCode === 37) {
+          cube2.position.x -= 1;
+        }
+
+        if (e.keyCode === 39) {
+          cube2.position.x += 1;
+        }
+      };
+
+      const cameraControl = new OrbitControls(camera, renderer.domElement);
+
+      function checkCollisions() {
+        if (cube2BB.intersectsSphere(sphereBB)) {
+          sphere.material.wireframe = true;
+        } else {
+          sphere.material.wireframe = false;
+        }
+
+        if (cube2BB.containsBox(cube1BB)) {
+          cube1.scale.y = 3;
+        } else {
+          cube1.scale.y = 1;
+        }
+
+        if (cube2BB.intersectsBox(cube1BB)) {
+          cube1.material.color = new THREE.Color("red");
+        } else {
+          cube1.material.color = new THREE.Color("aqua");
+        }
+      }
+
+      // Resize
+
+      function resize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.render(scene, camera);
+      }
+
+      window.addEventListener("resize", resize);
+
+      // Loaders
+      const loaderGLTF = new GLTFLoader();
+      loaderGLTF.load(
+        "police_officer_redford_-_proto_series_-_free.glb",
+        function (gltf) {
+          let obj = gltf.scene;
+          obj.scale.set(0.02, 0.02, 0.02);
+          scene.add(obj);
+        }
+      );
+
+      const loaderGLTF2 = new GLTFLoader();
+      loaderGLTF2.load(
+        "Ankit.glb",
+        function (gltf) {
+          let obj2 = gltf.scene;
+          obj2.scale.set(-1, 1, 1);
+          obj2.position.x=-5;
+          scene.add(obj2);
+        }
+      );
+      
+
+      const loaderGLTF3 = new GLTFLoader();
+      loaderGLTF3.load(
+        "BOX.glb",
+        function (gltf) {
+          let obj3 = gltf.scene;
+          obj3.scale.set(50, 50, 50);
+          obj3.position.x=5;
+          obj3.position.z=5;
+          scene.add(obj3);
+        }
+      );
+
+      const loaderGLTF4 = new GLTFLoader();
+      loaderGLTF4.load(
+        "ArcadeCabinet.glb",
+        function (gltf) {
+          let obj4 = gltf.scene;
+          obj4.scale.set(1, 1, 1);
+          obj4.position.x=8;
+          obj4.rotation.y=5;
+          scene.add(obj4);
+        }
+      );
+
+      const loaderSTLL = new STLLoader();
+      loaderSTLL.load("deadMouse.stl", function(model) {
+        let mesh = new THREE.Mesh(model, new THREE.MeshPhongMaterial({ color: "red" }));
+        mesh.scale.set(0.02, 0.02, 0.02);
+        mesh.position.set(-6, 0, 0);
+        mesh.rotateX(-Math.PI / 2);
+        scene.add(mesh);
+      });
+
+      function animate() {
+        cube2BB
+          .copy(cube2.geometry.boundingBox)
+          .applyMatrix4(cube2.matrixWorld);
+        checkCollisions();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
