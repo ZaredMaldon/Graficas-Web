@@ -1,7 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
-
 import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
-import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
+//import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
 
 
@@ -33,17 +32,20 @@ class BasicCharacterController {
         new BasicCharacterControllerProxy(this._animations));
 
     this._LoadModels();
+    this._LoadStaticModel('../modelos/','Set of Floating Islands.fbx',1);
+    this._LoadStaticModel('../modelos/','diamond.fbx',0.1);
   }
 
   _LoadModels() {
     const loader = new FBXLoader();
+    //CargarModeloFbx('../modelos/Set of Floating Islands.fbx',this._manager);
     loader.setPath('./resources/Archero/');
     loader.load('Archer.fbx', (fbx) => {
       fbx.scale.setScalar(0.1);
       fbx.traverse(c => {
         c.castShadow = true;
       });
-
+      
       this._target = fbx;
       this._params.scene.add(this._target);
 
@@ -68,6 +70,22 @@ class BasicCharacterController {
       loader.setPath('./resources/Archero/');
       loader.load('Crouched Walking.fbx', (a) => { _OnLoad('walk', a); });
       loader.load('Archidle1.fbx', (a) => { _OnLoad('idle', a); });
+    });
+  }
+
+
+  _LoadStaticModel(ruta,nombre,escala) {
+    const loader = new FBXLoader();
+    //CargarModeloFbx('../modelos/Set of Floating Islands.fbx',this._manager);
+    loader.setPath(ruta);
+    loader.load(nombre, (fbx) => {
+      fbx.scale.setScalar(escala);
+      fbx.traverse(c => {
+        c.castShadow = true;
+      });
+      
+      this._target = fbx;
+      this._params.scene.add(this._target);
     });
   }
 
@@ -620,3 +638,13 @@ let _APP = null;
 window.addEventListener('DOMContentLoaded', () => {
   _APP = new CharacterControllerDemo();
 });
+
+function CargarModeloFbx(ruta,manager){
+  var fbx_loader = new THREE.FBXLoader(manager);
+  // modelo estático fbx
+  fbx_loader.load(ruta, function(object){
+  object.scale.multiplyScalar(.1);
+  scene.add(object);
+  }, onProgress, onError);
+
+}
