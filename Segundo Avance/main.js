@@ -1,8 +1,11 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
 import {FBXLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/FBXLoader.js';
+import {OBJLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/OBJLoader.js';
+import {MTLLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/MTLLoader.js';
 //import {GLTFLoader} from 'https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
 
+const pos = new THREE.Vector3();
 
 class BasicCharacterControllerProxy {
   constructor(animations) {
@@ -32,8 +35,10 @@ class BasicCharacterController {
         new BasicCharacterControllerProxy(this._animations));
 
     this._LoadModels();
-    this._LoadStaticModel('../modelos/','Set of Floating Islands.fbx',1);
-    this._LoadStaticModel('../modelos/','diamond.fbx',0.1);
+    //this._LoadStaticModelfbx('../modelos/','Set of Floating Islands.fbx',1);
+    this._LoadStaticModelfbx('../modelos/','diamond.fbx',0.1);
+    pos.set(0,0,0);
+    this._LoadStaticModelobj('../modelos/','islas.obj','../modelos/islas.mtl',1.5,pos);
   }
 
   _LoadModels() {
@@ -74,7 +79,7 @@ class BasicCharacterController {
   }
 
 
-  _LoadStaticModel(ruta,nombre,escala) {
+  _LoadStaticModelfbx(ruta,nombre,escala) {
     const loader = new FBXLoader();
     //CargarModeloFbx('../modelos/Set of Floating Islands.fbx',this._manager);
     loader.setPath(ruta);
@@ -87,6 +92,40 @@ class BasicCharacterController {
       this._target = fbx;
       this._params.scene.add(this._target);
     });
+  }
+
+  _LoadStaticModelobj(ruta,nombre,mtlrute,escala,position){
+    const loader = new OBJLoader();
+    
+/*     loader.load(nombre,(obj)=>{
+      obj.scale.setScalar(escala);
+      obj.traverse(c => {
+        c.castShadow = true;
+      });
+      this._target = obj;
+      this._params.scene.add(this._target);
+      
+    }); */
+
+      var mtlLoader = new MTLLoader();
+      mtlLoader.load(mtlrute, function(materials){
+      mesh.scale.setScalar(escala);
+      materials.preload();
+      loader.setMaterials(materials);
+      loader.setPath(ruta);
+      loader.load(nombre, function(mesh){
+      
+        mesh.traverse(function(node){
+          node.castShadow = true;
+          node.receiveShadow = true;
+        });
+        scene.add(mesh);
+        mesh.position.set(position);
+        
+      });
+		
+	});
+  
   }
 
   Update(timeInSeconds) {
