@@ -25,16 +25,17 @@ class BasicCharacterController {
     this._decceleration = new THREE.Vector3(-0.0005, -0.0001, -3.0);
     this._acceleration = new THREE.Vector3(1, 0.25, 50.0);
     this._velocity = new THREE.Vector3(0, 0, 0);
+    this._velocity2 = new THREE.Vector3(0, 0, 0);
 
     this._animations = {};
     this._animations2 = {};
-    this._input = new BasicCharacterControllerInput();
+    this._input = new BasicCharacterControllerInput2();
     this._input2 = new BasicCharacterControllerInput();
     this._stateMachine = new CharacterFSM(
         new BasicCharacterControllerProxy(this._animations));
-    this._stateMachine2 = new CharacterFSM(
+        this._stateMachine2 = new CharacterFSM(
           new BasicCharacterControllerProxy(this._animations2));
-
+  
     this._LoadModels();
     this._LoadStaticModel('../modelos/','Set of Floating Islands.fbx',1);
     this._LoadStaticModel('../modelos/','diamond.fbx',0.1);
@@ -50,10 +51,10 @@ class BasicCharacterController {
         c.castShadow = true;
       });
       
-      this._Arquero1 = fbx;
-      this._params.scene.add(this._Arquero1);
+      this._target = fbx;
+      this._params.scene.add(this._target);
 
-      this._mixer = new THREE.AnimationMixer(this._Arquero1);
+      this._mixer = new THREE.AnimationMixer(this._target);
 
       this._manager = new THREE.LoadingManager();
       this._manager.onLoad = () => {
@@ -75,7 +76,6 @@ class BasicCharacterController {
       loader.load('Crouched Walking.fbx', (a) => { _OnLoad('walk', a); });
       loader.load('Archidle1.fbx', (a) => { _OnLoad('idle', a); });
     });
-    //Arquero2
     const loader2 = new FBXLoader();
     loader2.setPath('./resources/Archero/');
     loader2.load('Archer.fbx', (fbx) => {
@@ -85,8 +85,10 @@ class BasicCharacterController {
       });
       
       this._Arquero2 = fbx;
+      this._Arquero2.name="arquero2";
+      this._Arquero2.position.x=20;
       this._params.scene.add(this._Arquero2);
-
+     
       this._mixer2 = new THREE.AnimationMixer(this._Arquero2);
 
       this._manager2 = new THREE.LoadingManager();
@@ -109,6 +111,7 @@ class BasicCharacterController {
       loader2.load('Crouched Walking.fbx', (a) => { _OnLoad2('walk', a); });
       loader2.load('Archidle1.fbx', (a) => { _OnLoad2('idle', a); });
     });
+    
   }
 
 
@@ -122,32 +125,41 @@ class BasicCharacterController {
         c.castShadow = true;
       });
       
-      this._Arquero1 = fbx;
-      this._params.scene.add(this._Arquero1);
+      this._target = fbx;
+      this._params.scene.add(this._target);
     });
   }
 
   Update(timeInSeconds) {
-    //Aceleracion y desaceleración de las animaciones en movimiento
-    if (!this._Arquero1) {
+    if (!this._target) {
       return;
     }
 
     this._stateMachine.Update(timeInSeconds, this._input);
 
     const velocity = this._velocity;
+    const velocity2 = this._velocity2;
     const frameDecceleration = new THREE.Vector3(
         velocity.x * this._decceleration.x,
         velocity.y * this._decceleration.y,
         velocity.z * this._decceleration.z
     );
+    const frameDecceleration2 = new THREE.Vector3(
+      velocity2.x * this._decceleration.x,
+      velocity2.y * this._decceleration.y,
+      velocity2.z * this._decceleration.z
+  );
+    
     frameDecceleration.multiplyScalar(timeInSeconds);
     frameDecceleration.z = Math.sign(frameDecceleration.z) * Math.min(
         Math.abs(frameDecceleration.z), Math.abs(velocity.z));
+     frameDecceleration2.multiplyScalar(timeInSeconds);
+        frameDecceleration2.z = Math.sign(frameDecceleration2.z) * Math.min(
+            Math.abs(frameDecceleration2.z), Math.abs(velocity2.z));
 
     velocity.add(frameDecceleration);
-      //movimiento de personaje 1
-    const controlObject = this._Arquero1;
+    velocity2.add(frameDecceleration2);
+    const controlObject = this._target;
     const _Q = new THREE.Quaternion();
     const _A = new THREE.Vector3();
     const _R = controlObject.quaternion.clone();
@@ -157,6 +169,9 @@ class BasicCharacterController {
       acc.multiplyScalar(2.0);
     }
 
+    if (this._stateMachine._currentState.Name == 'atack') {
+      acc.multiplyScalar(0.0);
+    }
 
     if (this._input._keys.forward) {
       velocity.z += acc.z * timeInSeconds;
@@ -200,7 +215,63 @@ class BasicCharacterController {
       this._mixer.update(timeInSeconds);
     }
 
-    //animacion de movimiento segundo personaje
+      // movimiento del segundo jugador
+      
+    this._stateMachine2.Update(timeInSeconds, this._input2);
+    const controlObject2 = this._Arquero2;
+    const _Q2 = new THREE.Quaternion();
+    const _A2 = new THREE.Vector3();
+    const _R2 = controlObject2.quaternion.clone();
+
+    const acc2 = this._acceleration.clone();
+    if (this._input2._keys.shift) {
+      acc2.multiplyScalar(2.0);
+    }
+
+
+    if (this._input2._keys.forward) {
+      velocity2.z += acc2.z * timeInSeconds;
+    }
+    if (this._input2._keys.backward) {
+      velocity2.z -= acc2.z * timeInSeconds;
+    }
+    if (this._input2._keys.left) {
+      _A2.set(0, 1, 0);
+      _Q2.setFromAxisAngle(_A2, 4.0 * Math.PI * timeInSeconds * this._acceleration.y);
+      _R2.multiply(_Q2);
+    }
+    if (this._input2._keys.right) {
+      _A2.set(0, 1, 0);
+      _Q2.setFromAxisAngle(_A2, 4.0 * -Math.PI * timeInSeconds * this._acceleration.y);
+      _R2.multiply(_Q2);
+    }
+
+    controlObject2.quaternion.copy(_R2);
+
+    const oldPosition2 = new THREE.Vector3();
+    oldPosition2.copy(controlObject2.position);
+
+    const forward2 = new THREE.Vector3(0, 0, 1);
+    forward2.applyQuaternion(controlObject2.quaternion);
+    forward2.normalize();
+
+    const sideways2 = new THREE.Vector3(1, 0, 0);
+    sideways2.applyQuaternion(controlObject2.quaternion);
+    sideways2.normalize();
+
+    sideways2.multiplyScalar(velocity2.x * timeInSeconds);
+    forward2.multiplyScalar(velocity2.z * timeInSeconds);
+
+    controlObject2.position.add(forward2);
+    controlObject2.position.add(sideways2);
+
+    oldPosition2.copy(controlObject2.position);
+
+    if (this._mixer2) {
+      this._mixer2.update(timeInSeconds);
+    }
+
+
   }
 };
 
@@ -216,71 +287,62 @@ class BasicCharacterControllerInput {
       left: false,
       right: false,
       space: false,
-      shift: false
+      shift: false,
     };
-    this._keys2 = {
-      forward: false,
-      backward: false,
-      left: false,
-      right: false,
-      space: false,
-      shift: false
-    };
-    
     document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
     document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
   }
+
   _onKeyDown(event) {
     switch (event.keyCode) {
-      case 73: // i
-      this._keys.forward = true;
-      break;
-    case 74: // j
-      this._keys.left = true;
-      break;
-    case 75: // k
-      this._keys.backward = true;
-      break;
-    case 76: // l
-      this._keys.right = true;
-      break;
-    case 32: // SPACE
-      this._keys.space = true;
-      break;
-    case 16: // SHIFT
-      this._keys.shift = true;
-      break;
+      case 87: // w
+        this._keys.forward = true;
+        break;
+      case 65: // a
+        this._keys.left = true;
+        break;
+      case 83: // s
+        this._keys.backward = true;
+        break;
+      case 68: // d
+        this._keys.right = true;
+        break;
+      case 32: // SPACE
+        this._keys.space = true;
+        break;
+      case 16: // SHIFT
+        this._keys.shift = true;
+        break;
+    }
   }
-}
 
-_onKeyUp(event) {
-  switch(event.keyCode) {
-    case 73: // i
-      this._keys.forward = false;
-      break;
-    case 74: // j
-      this._keys.left = false;
-      break;
-    case 75: // k
-      this._keys.backward = false;
-      break;
-    case 76: // l
-      this._keys.right = false;
-      break;
-    case 32: // SPACE
-      this._keys.space = false;
-      break;
-    case 16: // SHIFT
-      this._keys.shift = false;
-      break;
-   
+  _onKeyUp(event) {
+    switch(event.keyCode) {
+      case 87: // w
+        this._keys.forward = false;
+        break;
+      case 65: // a
+        this._keys.left = false;
+        break;
+      case 83: // s
+        this._keys.backward = false;
+        break;
+      case 68: // d
+        this._keys.right = false;
+        break;
+      case 32: // SPACE
+        this._keys.space = false;
+        break;
+      case 16: // SHIFT
+        this._keys.shift = false;
+        break;
     }
   }
 };
+
 class BasicCharacterControllerInput2 {
   constructor() {
     this._Init();    
-    this._Controles2();
   }
 
   _Init() {
@@ -290,49 +352,48 @@ class BasicCharacterControllerInput2 {
       left: false,
       right: false,
       space: false,
-      shift: false
+      shift: false,
     };
-    
     document.addEventListener('keydown', (e) => this._onKeyDown(e), false);
     document.addEventListener('keyup', (e) => this._onKeyUp(e), false);
   }
+
   _onKeyDown(event) {
     switch (event.keyCode) {
-      case 76: // i
-      this._keys2.forward = true;
-      break;
-    case 74: // j
-      this._keys2.left = true;
-      break;
-    case 75: // k
-      this._keys2.backward = true;
-      break;
-    case 76: // l
-      this._keys2.right = true;
-      break;
+      case 73: // i
+        this._keys.forward = true;
+        break;
+      case 74: // j
+        this._keys.left = true;
+        break;
+      case 75: // k
+        this._keys.backward = true;
+        break;
+      case 76: // l
+        this._keys.right = true;
+        break;
       case 32: // SPACE
         this._keys.space = true;
         break;
       case 16: // SHIFT
         this._keys.shift = true;
         break;
-      
     }
   }
 
   _onKeyUp(event) {
     switch(event.keyCode) {
-      case 76: // i
-        this._keys2.forward = true;
+      case 73: // i
+        this._keys.forward = false;
         break;
       case 74: // j
-        this._keys2.left = true;
+        this._keys.left = false;
         break;
       case 75: // k
-        this._keys2.backward = true;
+        this._keys.backward = false;
         break;
       case 76: // l
-        this._keys2.right = true;
+        this._keys.right = false;
         break;
       case 32: // SPACE
         this._keys.space = false;
@@ -340,12 +401,9 @@ class BasicCharacterControllerInput2 {
       case 16: // SHIFT
         this._keys.shift = false;
         break;
-        
     }
   }
 };
-
-
 
 class FiniteStateMachine {
   constructor() {
@@ -392,7 +450,7 @@ class CharacterFSM extends FiniteStateMachine {
     this._AddState('idle', IdleState);
     this._AddState('walk', WalkState);
     this._AddState('run', RunState);
-    this._AddState('atack', DanceState);
+    this._AddState('dance', DanceState);
   }
 };
 
@@ -422,7 +480,7 @@ class DanceState extends State {
   }
 
   Enter(prevState) {
-    const curAction = this._parent._proxy._animations['atack'].action;
+    const curAction = this._parent._proxy._animations['dance'].action;
     const mixer = curAction.getMixer();
     mixer.addEventListener('finished', this._FinishedCallback);
 
@@ -445,7 +503,7 @@ class DanceState extends State {
   }
 
   _Cleanup() {
-    const action = this._parent._proxy._animations['atack'].action;
+    const action = this._parent._proxy._animations['dance'].action;
     
     action.getMixer().removeEventListener('finished', this._CleanupCallback);
   }
@@ -727,6 +785,7 @@ class CharacterControllerDemo {
         this._previousRAF = t;
       }
       this._scene.getObjectByName("plano").position.y=20;
+      
       this._RAF();
       
       this._threejs.render(this._scene, this._camera);
