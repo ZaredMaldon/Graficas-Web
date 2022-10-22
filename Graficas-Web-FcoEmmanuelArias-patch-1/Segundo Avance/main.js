@@ -40,20 +40,54 @@ class BasicCharacterController {
           new BasicCharacterControllerProxy(this._animations2));
   
     this._LoadModels();
-    this._LoadStaticModelfbx('../modelos/','diamond.fbx',0.1);
+    pos.set(500,100,0);
+    this._LoadStaticModelfbx2('../modelos/','diamond.fbx',0.1,100,10,0);
     pos.set(0,0,0);
     this._LoadStaticModelfbx('../modelos/isla/','isla_fbx.fbx',1.5,pos);
     pos.set(0,0,0);
-    this._LoadStaticModelobj('../modelos/TiroAlBlanco.obj','../modelos/10480_Archery_target_v1_max2011_iteration-2.mtl',1.5,pos);
-    //this._LoadStaticModelfbx('../modelos/fogata/','fogata_fbx.fbx',1.5);
+    this._LoadStaticModelobj('../modelos/TiroAlBlanco.obj','../modelos/10480_Archery_target_v1_max2011_iteration-2.mtl',-.5,pos);
+    pos.set(0,0,0);
+    this._LoadStaticModelfbx3('../modelos/fogata/','fogata_fbx.fbx',.1);
   }
 
-  _LoadStaticModelfbx(ruta,nombre,escala,position) {
+  _LoadStaticModelfbx(ruta,nombre,escala) {//isla
     const loader = new FBXLoader();
     
     loader.setPath(ruta);
     loader.load(nombre, (fbx) => {
       fbx.scale.setScalar(escala);
+      
+      fbx.traverse(c => {
+        c.castShadow = true;
+      });
+      
+      this._target = fbx;
+      this._params.scene.add(this._target);
+    });
+  }
+  _LoadStaticModelfbx2(ruta,nombre,escala) {//diamante
+    const loader = new FBXLoader();
+    
+    loader.setPath(ruta);
+    loader.load(nombre, (fbx) => {
+      fbx.scale.setScalar(escala);
+      fbx.position.set(200,18,120);
+      
+      fbx.traverse(c => {
+        c.castShadow = true;
+      });
+      
+      this._target = fbx;
+      this._params.scene.add(this._target);
+    });
+  }
+  _LoadStaticModelfbx3(ruta,nombre,escala) {//fogata
+    const loader = new FBXLoader();
+    
+    loader.setPath(ruta);
+    loader.load(nombre, (fbx) => {
+      fbx.scale.setScalar(escala);
+      fbx.position.set(220,8,100);
       fbx.traverse(c => {
         c.castShadow = true;
       });
@@ -72,13 +106,15 @@ class BasicCharacterController {
         console.log(materials);
         loader.setMaterials(materials);
         loader.load(ruta,(obj)=>{
-        //obj.scale.setScalar(escala);
-        obj.traverse(c => {
-          c.castShadow = true;
-          //c.receiveShadow=true;
-        });
-        this._target = obj;
-        this._params.scene.add(this._target);
+          obj.position.set(200,8,100)
+          obj.rotation.set(20.5,0,15);
+          obj.scale.setScalar(-.1);
+          obj.traverse(c => {
+            c.castShadow = true;
+            //c.receiveShadow=true;
+          });
+          this._target = obj;
+          this._params.scene.add(this._target);
       });
     });
     
@@ -89,6 +125,7 @@ class BasicCharacterController {
     //CargarModeloFbx('../modelos/Set of Floating Islands.fbx',this._manager);
     loader.setPath('./resources/Archero/');
     loader.load('Archer.fbx', (fbx) => {
+      fbx.position.set(-120,25,-170);
       fbx.scale.setScalar(0.1);
       fbx.traverse(c => {
         c.castShadow = true;
@@ -115,6 +152,7 @@ class BasicCharacterController {
       };
 
       const loader = new FBXLoader(this._manager);
+      
       loader.setPath('./resources/Archero/');
       loader.load('Crouched Walking.fbx', (a) => { _OnLoad('walk', a); });
       loader.load('Archidle1.fbx', (a) => { _OnLoad('idle', a); });
@@ -129,7 +167,7 @@ class BasicCharacterController {
       
       this._Arquero2 = fbx;
       this._Arquero2.name="arquero2";
-      this._Arquero2.position.x=20;
+      this._Arquero2.position.set(-100,25,-170);
       this._params.scene.add(this._Arquero2);
      
       this._mixer2 = new THREE.AnimationMixer(this._Arquero2);
@@ -768,7 +806,7 @@ class CharacterControllerDemo {
     plane.castShadow = false;
     plane.receiveShadow = true;
     plane.rotation.x = -Math.PI / 2;
-    this._scene.add(plane);
+    //this._scene.add(plane);
     
     const plane2 = new THREE.Mesh(
       new THREE.PlaneGeometry(10, 3, 10, 10),
@@ -856,12 +894,3 @@ window.addEventListener('DOMContentLoaded', () => {
   _APP = new CharacterControllerDemo();
 });
 
-function CargarModeloFbx(ruta,manager){
-  var fbx_loader = new THREE.FBXLoader(manager);
-  // modelo estático fbx
-  fbx_loader.load(ruta, function(object){
-  object.scale.multiplyScalar(.1);
-  scene.add(object);
-  }, onProgress, onError);
-
-}
