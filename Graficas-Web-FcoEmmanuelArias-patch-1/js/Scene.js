@@ -1,1 +1,0 @@
-//metodos de scene
