@@ -800,7 +800,10 @@ class CharacterControllerDemo {
     const near = 1.0;
     const far = 1000.0;
     this._camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-    this._camera.position.set(25, 10, 25);
+    this._camera.position.set(50, 170, 30);
+    console.log(this._camera.position.x);
+    console.log(this._camera.position.y);
+    console.log(this._camera.position.z);
 
     this._scene = new THREE.Scene();
 
