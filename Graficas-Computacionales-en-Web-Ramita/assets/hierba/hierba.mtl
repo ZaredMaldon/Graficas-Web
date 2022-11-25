@@ -1,0 +1,43 @@
+newmtl hierba:None
+illum 4
+Kd 0.80 0.80 0.80
+Ka 0.80 0.80 0.80
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.80 0.80 0.80
+Ns 500.00
+newmtl hierba:___Default
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd golbarg_cosbarg.jpeg
+Ni 1.45
+Ks 0.00 0.00 0.00
+Ns 18.00
+newmtl hierba:___Default2
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd golbarg_cosbarg2.jpeg
+Ni 1.45
+Ks 0.00 0.00 0.00
+Ns 18.00
+newmtl hierba:___Default4
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd jobeee.jpeg
+Ni 1.45
+Ks 0.00 0.00 0.00
+Ns 18.00
+newmtl hierba:___Default6
+illum 4
+Kd 1.00 0.87 0.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+Ni 1.45
+Ks 0.00 0.00 0.00
+Ns 18.00

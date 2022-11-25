@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="HandheldFriendly" content="true">
+	<title>Document</title>
+
+	<!---   CSS:    --->
+	<link rel="stylesheet" href="./hoja_cascada.css">
+
+	<!---   Fuentes:    --->
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300&display=swap" rel="stylesheet">
+
+	<!---   JavaScript:    --->
+	<!---   jquery:    --->
+	<script type="text/javascript" src="./js/jquery/jquery-3.6.0.min.js"></script>
+
+	<!---   threejs:    --->
+	<script type="text/javascript" src="./js/three/three.js"></script>
+	<script type="text/javascript" src="js/loaders/MTLLoader.js"></script>
+	<script type="text/javascript" src="js/loaders/OBJLoader.js"></script>
+ 	<script type="text/javascript" src="js/loaders/FBXLoader.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.js"></script>
+	<!--- .js: --->
+	<script type="text/javascript" src="./js/principal.js"></script>
+	<script type="text/javascript" src="./js/variables.js"></script>
+	<script type="text/javascript" src="./js/create.js"></script>
+	<script type="text/javascript" src="./js/teclas.js"></script>
+	<script type="text/javascript" src="./js/render.js"></script>
+	<script type="text/javascript" src="./js/escenas.js"></script>
+	<script type="text/javascript" src="./js/unJugador.js"></script>
+	<script type="text/javascript" src="./database/models/model_puntuaciones.js"></script>
+<script type="text/javascript" src="./js/mifacebook.js"></script>
+
+	<!---   Boostrap:    --->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+<!---   iniciar share en fb  --->
+<script>
+function shareFB() {
+        var score = $("#ctmlmad").text();
+        shareScore(score);
+    }
+</script>
+<!---bongocat--->
+<script>
+$(document).ready(function(){
+   $("#png-image-1, #png-image-2, #glencakes").click(function(){
+       $("#png-image-1").toggleClass("bongo-1");
+       $("#png-image-2").toggleClass("bongo-2");
+       $("#updates-text").slideToggle(80);  
+
+   });
+});
+</script>
+
+<!--- tabs-->
+
+<script>
+function openCity(cityName) {
+  var i;
+  var x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  document.getElementById(cityName).style.display = "block";  
+}
+</script>
+
+
+<!---puntuaciones-->
+<script>
+$(document).ready(function(){
+$(".faq-answer").hide();
+$(".faq-question").click(function(){
+$(this).next(".faq-answer").slideToggle('fast');
+});
+});
+</script>
+<!-------->
+
+<script src="//cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script>
+<link href="//fonts.googleapis.com/css?family=Public+Sans|Karla" rel="stylesheet">
+
+<script src="//static.tumblr.com/gtjt4bo/QRmphdsdv/glenplayer02.js"></script>
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+	<div id="glentab01">
+   <div id="image-holder">
+   <img id="png-image-1" src="https://cdn.discordapp.com/attachments/879141252631769122/914114891919540254/imagen_1.png">
+   <img id="png-image-2" src="https://cdn.discordapp.com/attachments/879141252631769122/914114380734529606/imagen_2.png">
+   </div>
+
+   <div id="glencakes">
+   <div id="update-title-1">Configuracion de musica</div>
+      <div id="update-title-2">antes de empezar el juego</div>
+   </div>
+   <div id="updates-text">
+<div id="glenplayer02">
+    <div class="music-controls" onclick="songstart();">
+        <div class="playy">►</div>
+        <div class="pausee">◾</div>
+    </div>    
+  
+
+</div><!--end music player--> 
+
+<audio id="tune" src="https://cdn.discordapp.com/attachments/879141252631769122/913088534271885362/bgm.mp3" type="audio" volume="60%"></audio>Musiquita con bongo cat</div>
+
+</div><!--end updates tab-->
+
+	<div id="modal-1">
+		<div id="configuracion">
+
+			<img src="Imagenes/pausa.gif" >
+			<div class="contenedorConf">
+				<div id="Sonido">Salir</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div id="contenedor">
+
+
+
+		<!---menu-->
+		<!-- Navbar links -->
+		<div class="navbar">
+			<button class="tablinks">
+			<p><a href="/">Inicio</a></p>
+			</button>
+			<button class="tablinks" onclick="openCity(event, 'Leaderboard')">
+				<span class="emoji">🏆</span>
+				<p><a href="https://busquedamiaucable.000webhostapp.com/ListaPuntos.html">puntajes</a></p>
+			</button>
+
+			<button class="tablinks">
+				<span class="emoji">🕹️</span>
+<p><a href="./how.html">como jugar</p></button>
+				<div id="instructivo" class="tablinks" style="display:none">
+				
+  <p></p>
+</div>
+			</button>
+			<button class="tablinks" onclick="shareFB();"><span class="emoji">🥔</span><a href="" title="no usar antes de acabar el juego">compartir puntuacion</a><span><class="number"></span></button>
+			
+			
+		</div>
+
+		<!-- Navbar content -->
+		<div id="Home" class="tabcontent">
+			<div id="title">
+
+			</div>
+		</div>
+
+		<div id="Leaderboard" class="tabcontent">
+			     
+		</div>
+
+		<div id="Jugadores">
+			<label class="neon">Seleccione cantidad de jugadores</label>
+			<div id="SelecUnJugador">
+				<p>∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴∴</p>
+			</div>
+			<div id="SelecDosJugadores">
+				<p>☃☃☃☃☃☃☃☃☃☃☃☃☃</p>
+			</div>
+		</div>
+<!--particulas hechas de manera bien puerk, no me chemsifiquen-->
+<div class="container"><img class="background" src="https://i.imgur.com/lk7cwje.png"/>
+ 
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+  <div class="circle-container">
+    <div class="circle"></div>
+  </div>
+</div>
+<!---->
+
+		<div id="Bienvenido">
+			<p class="neon">Bienvenido</p>
+
+			<p class="neon">Por favor inserten su nombre:</p>
+			<div id="cato">
+				<div class="bubble" id="cato"></div>
+				<div class="cato"></div><svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
+					xmlns:xlink="http://www.w3.org/1999/xlink" width="20%" id="blobSvg">
+					<defs>
+						<clipPath id="shape"> 
+							<path id="blob"
+								d="M464.5,279.5Q431,309,441,352.5Q451,396,418.5,416.5Q386,437,354.5,456Q323,475,286.5,452.5Q250,430,211.5,458Q173,486,139.5,467.5Q106,449,79,421.5Q52,394,43.5,357Q35,320,43.5,285Q52,250,37,213Q22,176,53.5,153Q85,130,115.5,118.5Q146,107,167.5,84Q189,61,219.5,61Q250,61,288.5,37Q327,13,354,41.5Q381,70,389,106.5Q397,143,440.5,158.5Q484,174,491,212Q498,250,464.5,279.5Z"
+								fill="#d1d8e0"></path>
+						</clipPath>
+					</defs>
+					<image x="0" y="0" width="100%" height="100%" clip-path="url(#shape)"
+						xlink:href="https://i.imgur.com/4qmiEOV.png" preserveAspectRatio="none"></image>
+			</div></svg>
+			<span class="input">
+
+				<input id="input" type="text" placeholder="Jugador 1" required autocomplete="off"><span></span></span>
+			<span class="input">
+
+				<input id="input2" type="text" placeholder="Jugador 2" required autocomplete="off"><span></span></span>
+			<button id="btnEnviar">Enviar</button>
+		</div>
+
+		<div id="Bienvenido2">
+			<p class="neon">Bienvenido</p>
+
+			<p class="neon">Por favor inserte su nombre:</p>
+			<div id="cato">
+				<div class="bubble" id="cato"></div>
+				<div class="cato"></div><svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
+					xmlns:xlink="http://www.w3.org/1999/xlink" width="20%" id="blobSvg">
+					<defs>
+						<clipPath id="shape"> 
+							<path id="blob"
+								d="M464.5,279.5Q431,309,441,352.5Q451,396,418.5,416.5Q386,437,354.5,456Q323,475,286.5,452.5Q250,430,211.5,458Q173,486,139.5,467.5Q106,449,79,421.5Q52,394,43.5,357Q35,320,43.5,285Q52,250,37,213Q22,176,53.5,153Q85,130,115.5,118.5Q146,107,167.5,84Q189,61,219.5,61Q250,61,288.5,37Q327,13,354,41.5Q381,70,389,106.5Q397,143,440.5,158.5Q484,174,491,212Q498,250,464.5,279.5Z"
+								fill="#d1d8e0"></path>
+						</clipPath>
+					</defs>
+					<image x="0" y="0" width="100%" height="100%" clip-path="url(#shape)"
+						xlink:href="https://i.imgur.com/4qmiEOV.png" preserveAspectRatio="none"></image>
+			</div></svg>
+			<span class="input">
+
+				<input id="input3" type="text" placeholder="Jugador 1" required autocomplete="off"><span></span></span>
+
+
+			<button id="btnEnviar2">Enviar</button>
+		</div>
+
+		<div id="Dificultad">
+			<label class="neon">Seleccione dificultad</label>
+			<div id="SelecNormal">
+				<p>☃☃☃☃☃☃☃☃☃☃☃☃☃☃☃</p>
+			</div>
+			<div id="SelecDificil">
+				<p>☃☃☃☃☃☃☃☃☃☃☃☃☃☃☃</p>
+			</div>
+		</div>
+
+
+		<div id="Cargando">
+			<label id="Saludo" class="neon">Hola</label>
+
+			<p class="neon">Cargando, por favor esperen</p>
+			<img src="https://i.imgur.com/iuKPR8p.gif"></img>
+		</div>
+
+		<div id="Ganador">
+			<label id="Felicidades" class="neon"></label>
+			<!---<img src="https://i.imgur.com/iuKPR8p.gif"></img>--->
+
+      <label id="ctmlmad" class="neon"></label>
+		</div>
+
+	</div>
+
+	<div id="contCanvas">
+
+		<div style="width: 50%" id="scene-section"></div>
+		<div style="flex-grow: 1" id="scene-section-2"></div>
+		<div id="scene-section-3"></div> 
+		<div id="config"></div>
+
+		<div id="tabla">
+			<table class="table table-striped table-dark">
+				<thead>
+					<tr>
+						<th class="titulo" scope="col">Nombres</th>
+						<th class="titulo" scope="col">Puntaje</th>
+						<th class="titulo" scope="col">Escena</th>
+					</tr>
+				</thead>
+				<tbody id="tablita">
+					<!-----
+					<tr>
+						<td id="Name01" class="titulo"></td>
+						<td class="titulo">5/10</td>
+						<td class="titulo">2</td>
+					</tr>
+					<tr>
+						<td id="Name02" class="titulo"></td>
+						<td class="titulo">6/15</td>
+						<td class="titulo">3</td>
+					</tr>
+------>
+				</tbody>
+			</table>
+		</div>
+		<canvas id="c"></canvas>
+
+	</div>
+
+
+</body>
+
+</html>

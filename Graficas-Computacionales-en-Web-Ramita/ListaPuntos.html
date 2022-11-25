@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puntuaciones</title>
+
+    <!---   jquery:    --->
+    <script type="text/javascript" src="./js/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="./database/models/model_puntuaciones.js"></script>
+    
+    
+    <!---   JavaScript:    --->
+    <script type="text/javascript" src="./js/puntuaciones.js"></script>
+    
+    <!---   Boostrap:    --->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<style type="text/css">
+   body{
+    background-color: coral;
+   } 
+    #tabla {
+    z-index: 15;
+    width: 100vw;
+    height: 100vh;
+    overflow:scroll;
+    overflow-x: hidden;
+}
+
+.titulo {
+    font-size: .9vw;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.ListaPuntuaciones{
+    margin: 2vh auto;
+}
+table#space {
+  border-collapse: separate;
+  border-spacing: 10px 5px;
+}
+</style>
+<body>
+
+      <div id="tabla">
+            <table class="ListaPuntuaciones">
+                <thead>
+                    <tr>
+                        <th class="titulo col-md-6" scope="col">Nombres</th>
+                        <th class="titulo col-md-6" scope="col">Puntaje</th>
+                      
+                    </tr>
+                </thead>
+                
+            </table>
+        </div>
+
+</body>
+
+</html>

@@ -12,6 +12,8 @@ var canShoot=0,camera,disparo1=false,disparo2=false;
 var i=0,rotacionasig2;
 var PosFlecha=false;
 var flechacion,parametro;
+var cambioescenario;
+localStorage.setItem('escenario',0);
 class BasicCharacterControllerProxy {
   constructor(animations) {
     this._animations = animations;
@@ -54,6 +56,14 @@ class BasicCharacterController {
           this._LoadStaticModelobj('../modelos/TiroAlBlanco.obj','../modelos/10480_Archery_target_v1_max2011_iteration-2.mtl',-.5,pos);
           pos.set(0,0,0);
           this._LoadStaticModelfbx3('../modelos/fogata/','fogata_fbx.fbx',.1);
+          
+          if(cambioescenario==2){
+            this._LoadStaticModelfbx4('../modelos/escenarioGranja.fbx',1,pos);
+            pos.set(0,0,0);
+          }else if(cambioescenario==3){
+            this._LoadStaticModelfbx5('../modelos/escenarioNavideño.fbx',1,pos);
+            pos.set(0,0,0);            
+          }
     
   }
 
@@ -134,6 +144,102 @@ class BasicCharacterController {
     });
   }
 
+  _LoadStaticModelfbx4(ruta,nombre,escala) {//segundo escenario
+    const loader = new FBXLoader();
+    
+    loader.setPath(ruta);
+    loader.load(nombre, (fbx) => {
+      fbx.scale.setScalar(escala);
+      
+      fbx.traverse(c => {
+        c.castShadow = true;
+      });
+      
+      this._target = fbx;
+      this._params.scene.add(this._target);
+    });
+  }
+  _LoadModelfbx4(ruta,nombre,escala,posicionx,posiciony,posicionz) {//segundo escenario
+    const flecha = new FBXLoader();
+    flecha.setPath(ruta);
+    flecha.load(nombre, (fle) => {
+      fle.scale.setScalar(escala);
+      fle.position.set(posicionx-2,posiciony,posicionz+2);
+      fle.rotation.z = Math.PI / 2;
+      fle.rotation.y=jugador2.rotation.y+1.5;
+      fle.rotation.x=jugador2.rotation.x;
+      fle.position.y=posiciony+13;
+      fle.velocidad = new THREE.Vector3(Math.sin(jugador2.rotation),0,Math.cos(jugador2.rotation));
+      fle.alive=true;
+      fle.traverse(c => {
+        c.castShadow = true;
+      });
+      flechacion=fle;
+      flechacion.name = "flecha";
+      PosFlecha=true;
+      canShoot=10;
+      parametro.scene.add(flechacion);
+      setTimeout(function(){
+        canShoot=-1;
+        fle.alive=false;
+        parametro.scene.remove(flechacion);
+        PosFlecha=false;
+       disparo2=false;
+      },1000);
+      
+      this._params
+      
+    });
+  }
+
+  _LoadStaticModelfbx5(ruta,nombre,escala) {//tercer escenario
+    const loader = new FBXLoader();
+    
+    loader.setPath(ruta);
+    loader.load(nombre, (fbx) => {
+      fbx.scale.setScalar(escala);
+      
+      fbx.traverse(c => {
+        c.castShadow = true;
+      });
+      
+      this._target = fbx;
+      this._params.scene.add(this._target);
+    });
+  }
+  _LoadModelfbx5(ruta,nombre,escala,posicionx,posiciony,posicionz) {//tercer escenario
+    const flecha = new FBXLoader();
+    flecha.setPath(ruta);
+    flecha.load(nombre, (fle) => {
+      fle.scale.setScalar(escala);
+      fle.position.set(posicionx-2,posiciony,posicionz+2);
+      fle.rotation.z = Math.PI / 2;
+      fle.rotation.y=jugador2.rotation.y+1.5;
+      fle.rotation.x=jugador2.rotation.x;
+      fle.position.y=posiciony+13;
+      fle.velocidad = new THREE.Vector3(Math.sin(jugador2.rotation),0,Math.cos(jugador2.rotation));
+      fle.alive=true;
+      fle.traverse(c => {
+        c.castShadow = true;
+      });
+      flechacion=fle;
+      flechacion.name = "flecha";
+      PosFlecha=true;
+      canShoot=10;
+      parametro.scene.add(flechacion);
+      setTimeout(function(){
+        canShoot=-1;
+        fle.alive=false;
+        parametro.scene.remove(flechacion);
+        PosFlecha=false;
+       disparo2=false;
+      },1000);
+      
+      this._params
+      
+    });
+  }
+
   _LoadStaticModelobj(ruta,mtlrute,escala,position){
     const mtlLoader = new MTLLoader();
     const loader = new OBJLoader();
@@ -156,6 +262,8 @@ class BasicCharacterController {
     });
     
   }
+
+
 
   _LoadModels() {
     const loader = new FBXLoader();

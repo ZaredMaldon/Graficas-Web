@@ -1,0 +1,9 @@
+newmtl palito:blinn4
+illum 4
+Kd 1.00 1.00 1.00
+Ka 0.50 0.50 0.50
+Tf 1.00 1.00 1.00
+map_Kd blinn4SG_Base_Color.png
+Ni 1.45
+Ks 1.00 1.00 1.00
+Ns 56.81

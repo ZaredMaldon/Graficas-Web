@@ -1,0 +1,9 @@
+newmtl llave:key
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd key_albedo.jpg
+Ni 1.45
+Ks 0.50 0.50 0.50
+Ns 225.00

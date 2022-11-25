@@ -1,0 +1,18 @@
+newmtl latita:tab
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd tab_tab_BaseColor.png
+Ni 1.45
+Ks 0.30 0.30 0.30
+Ns 180.00
+newmtl latita:tuna_can
+illum 4
+Kd 1.00 1.00 1.00
+Ka 1.00 1.00 1.00
+Tf 1.00 1.00 1.00
+map_Kd tunacan__tuna_can_BaseColor.png
+Ni 1.45
+Ks 0.30 0.30 0.30
+Ns 225.00

@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Como jugar</title>
+ 
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,400i,700" rel="stylesheet">
+ 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+        <script>
+            $(document).ready(function(){
+                $('.box').click(function(){
+                    $('.box').css('z-index', '1');
+                    $(this).css('z-index', '99').toggleClass('bigbox');
+                    $(this).children('.title').toggleClass('newtitle');
+                    $(this).children('.content').toggleClass('display');
+                });
+            });
+        </script>
+ 
+        <style type="text/css">
+ 
+            body {
+                background:url(https://i.imgur.com/lk7cwje.png);
+                
+                background-image: cover;
+                background-size: 100%;
+                margin: 0px;
+                overflow: hidden;
+                font-family: 'Raleway', sans-serif;
+                color: #555;
+                font-size: 12px;
+            }
+ 
+            ::-webkit-scrollbar { width: 3px; background: transparent; }
+            ::-webkit-scrollbar-thumb { background: #fff; }
+            ::-webkit-scrollbar-corner { background: #fff; }
+ 
+            a {
+                text-decoration: none;
+                color: #fff;
+                font-weight: 700;
+            }
+ 
+            .con {
+                width: 500px;
+                height: 500px;
+                position: relative;
+                margin-top: 8%;
+            }
+ 
+            .backtoblog a {
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                color: #555;
+                font-style: italic;
+            }
+ 
+            .credit a {
+                position: fixed;
+                color: #555;
+                bottom: 10px;
+                right: 10px;
+            }
+ 
+            .box {
+                width: 250px;
+                height: 250px;
+                overflow: hidden;
+                position: absolute;
+                transition-duration: 0.5s;
+                -moz-transition-duration: 0.5s;
+                -webkit-transition-duration: 0.5s;
+                -o-transition-duration: 0.5s;
+            }
+ 
+            .bigbox {
+                width: 500px;
+                height: 500px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                transition-duration: 0.5s;
+                -moz-transition-duration: 0.5s;
+                -webkit-transition-duration: 0.5s;
+                -o-transition-duration: 0.5s;
+            }
+ 
+            .title {
+                color: white;
+                text-align: center;
+                padding-top: 110px;
+                text-transform: uppercase;
+                font-size: 30px;
+                font-weight: 700;
+                transition-duration: 0.5s;
+                -moz-transition-duration: 0.5s;
+                -webkit-transition-duration: 0.5s;
+                -o-transition-duration: 0.5s;
+            }
+ 
+            .newtitle {
+                display: none;
+            }
+ 
+            .content {
+                padding: 20px;
+                opacity: 0;
+                transition-duration: 0.5s;
+                -webkit-transition-duration: 0.5s;
+                -moz-transition-duration: 0.5s;
+                -o-transition-duration: 0.5s;
+                transition-delay: 0s;
+                -moz-transition-delay: 0s;
+                -webkit-transition-delay: 0s;
+                -o-moz-transition-delay: 0s;
+            }
+ 
+            .about img {
+                width: 130px;
+                height: 130px;
+                border: 5px solid #eee;
+            }
+ 
+            .about b {
+                color: #668284;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+ 
+            .about .quote {
+                text-transform: uppercase;
+                color: #fff;
+                font-size: 9px;
+                text-align: justify;
+            }
+ 
+            .about .text {
+                padding: 5px 10px 5px 10px;
+                overflow: auto;
+                height: 270px;
+            }
+ 
+            .about .text b {
+                font-weight: 700;
+                color: #555;
+                text-transform: lowercase;
+            }
+ 
+            .faq .question {
+                background: #fff;
+                padding: 7px;
+                font-size: 15px;
+                color: #C5E0DC;
+                text-align: center;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+ 
+            .faq .answer {
+                border: 2px solid #fff;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+ 
+            .tags .header {
+                width: 200px;
+                height: 25px;
+                text-align: center;
+                border: 2px solid #fff;
+                background: transparent;
+                text-transform: uppercase;
+                color: #fff;
+                font-size: 15px;
+                padding-top: 5px;
+            }
+ 
+            .tags ul {
+                width: 184px;
+                list-style: none;
+                margin: 0px;
+                padding: 5px 5px 5px 15px;
+                background: white;
+                line-height: 150%;
+                margin-bottom: 15px;
+            }
+ 
+            .broll img {
+                float: left;
+                display: table;
+                margin: 10px;
+                width: 30px;
+                height: 30px;
+                border-radius: 50px;
+                -webkit-border-radius: 50px;
+                -moz-border-radius: 50px;
+            }
+ 
+            .display {
+                height: auto;
+                opacity: 1;
+                transition-duration: 0.5s;
+                -webkit-transition-duration: 0.5s;
+                -moz-transition-duration: 0.5s;
+                -o-transition-duration: 0.5s;
+                transition-delay: 0.5s;
+                -moz-transition-delay: 0.5s;
+                -webkit-transition-delay: 0.5s;
+                -o-moz-transition-delay: 0.5s;
+            }
+ 
+
+ #btnEnviar3 {
+    text-transform: uppercase;
+    background-color: #ffdd57;
+    border-radius: 290486px;
+    color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: calc(90% + 75px);
+    font-family: inherit;
+    font-size: 16px;
+    padding: 12px;
+    width: max-content;
+    height: auto;
+    display: block;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    padding-left: 18px;
+    cursor: pointer;
+}
+        </style>
+    </head>
+    <body>
+ <script type="text/javascript">
+
+  function openwindow(){
+window.open("autumn_effect.htm","","width=350,height=500")
+}
+
+
+  var snowsrc="https://i.imgur.com/mQJRcj7.png"
+
+  var no = 10;
+
+  var hidesnowtime = 0;
+
+  var snowdistance = "pageheight";
+
+
+  var ie4up = (document.all) ? 1 : 0;
+  var ns6up = (document.getElementById&&!document.all) ? 1 : 0;
+
+    function iecompattest(){
+    return (document.compatMode && document.compatMode!="BackCompat")? document.documentElement : document.body
+    }
+
+  var dx, xp, yp;   
+  var am, stx, sty;  
+  var i, doc_width = 800, doc_height = 600; 
+  
+  if (ns6up) {
+    doc_width = self.innerWidth;
+    doc_height = self.innerHeight;
+  } else if (ie4up) {
+    doc_width = iecompattest().clientWidth;
+    doc_height = iecompattest().clientHeight;
+  }
+
+  dx = new Array();
+  xp = new Array();
+  yp = new Array();
+  am = new Array();
+  stx = new Array();
+  sty = new Array();
+  snowsrc=(snowsrc.indexOf("dynamicdrive.com")!=-1)? "snow.gif" : snowsrc
+  for (i = 0; i < no; ++ i) {  
+    dx[i] = 0;                        
+    xp[i] = Math.random()*(doc_width-50);  
+    yp[i] = Math.random()*doc_height;
+    am[i] = Math.random()*20;         
+    stx[i] = 0.02 + Math.random()/10; 
+    sty[i] = 0.7 + Math.random();    
+        if (ie4up||ns6up) {
+      if (i == 0) {
+        document.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><a href=\"http://dynamicdrive.com\"><img src='"+snowsrc+"' border=\"0\"><\/a><\/div>");
+      } else {
+        document.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img src='"+snowsrc+"' border=\"0\"><\/div>");
+      }
+    }
+  }
+
+  function snowIE_NS6() {  
+    doc_width = ns6up?window.innerWidth-10 : iecompattest().clientWidth-10;
+        doc_height=(window.innerHeight && snowdistance=="windowheight")? window.innerHeight : (ie4up && snowdistance=="windowheight")?  iecompattest().clientHeight : (ie4up && !window.opera && snowdistance=="pageheight")? iecompattest().scrollHeight : iecompattest().offsetHeight;
+    if (snowdistance=="windowheight"){
+        doc_height = window.innerHeight || iecompattest().clientHeight
+    }
+    else{
+        doc_height = iecompattest().scrollHeight
+    }
+    for (i = 0; i < no; ++ i) {  
+      yp[i] += sty[i];
+      if (yp[i] > doc_height-50) {
+        xp[i] = Math.random()*(doc_width-am[i]-30);
+        yp[i] = 0;
+        stx[i] = 0.02 + Math.random()/10;
+        sty[i] = 0.7 + Math.random();
+      }
+      dx[i] += stx[i];
+      document.getElementById("dot"+i).style.top=yp[i]+"px";
+      document.getElementById("dot"+i).style.left=xp[i] + am[i]*Math.sin(dx[i])+"px";  
+    }
+    snowtimer=setTimeout("snowIE_NS6()", 10);
+  }
+
+    function hidesnow(){
+        if (window.snowtimer) clearTimeout(snowtimer)
+        for (i=0; i<no; i++) document.getElementById("dot"+i).style.visibility="hidden"
+    }
+        
+
+if (ie4up||ns6up){
+    snowIE_NS6();
+        if (hidesnowtime>0)
+        setTimeout("hidesnow()", hidesnowtime*1000)
+        }
+
+</script>
+        <table align="center" class="con">
+            <tr>
+ 
+                <td><div class="box" style="background: #FF959F; top: 0px; left: 0px;">
+                    <div class="title">Modo Individual normal</div>
+                    <div class="content about">
+                        <table cellspacing="10" style="margin-top: 3px;"><tr>
+                            <td><img src="https://cdn.discordapp.com/attachments/843613696307757096/918171419181973524/4.png"></td>
+                            <td valign="top" style="color: white">
+                                COMO JUGAR:
+                                <p>HUYE DE LA FLOR QUE QUITA 10 PUNTOS, ACUMULA PUNTOS RECOGIENDO PERAS Y GATOPANES QUE VALEN 3 Y 5 PUNTOS RESPECTIVAMENTE <br>
+                                MUEVETE CON LAS TECLAS WASD Y AVANZA DE NIVEL RECOGIENDO LOS OBJETOS PRINCIPALES CON Q
+                                <p/>
+ 
+                                <div class="quote"><h1><a href="./"><b>Volver al menu inicial</h1></div>
+                            </td>
+                        </tr></table>
+ 
+                       
+                    </div>
+                </div></td>
+ 
+ 
+                <td><div class="box" style="background: #FFCA95; right: 0px; top: 0px;">
+                    <div class="title">Modo Individual dificil</div>
+                    <div class="content about">
+                        <table cellspacing="10" style="margin-top: 3px;"><tr>
+                            <td><img src="https://cdn.discordapp.com/attachments/843613696307757096/918171418888380456/3.png"></td>
+                            <td valign="top" style="color: white">
+                                COMO JUGAR:
+                                <p>
+                          
+                                HUYE DE LA FLOR QUE QUITA 10 PUNTOS, ACUMULA PUNTOS RECOGIENDO PERAS Y GATOPANES QUE VALEN 3 Y 5 PUNTOS RESPECTIVAMENTE<br>
+                                MUEVETE CON LAS TECLAS WASD Y AVANZA DE NIVEL RECOGIENDO LOS OBJETOS PRINCIPALES CON Q<br>
+                                POR CADA ESCENA EL NUMERO DE FLORES VA AUMENTANDO, CUIDADO
+                                <p/>
+ <div class="quote"><h1><a href="./"><b>Volver al menu inicial</h1></div>
+                              
+                            </td>
+                        </tr></table>
+ 
+                        
+                    </div>
+                </div></td>
+            </tr>
+ 
+ 
+            <tr>
+                <td><div class="box" style="background: #FFCA95; bottom: 0px; left: 0px;">
+                    <div class="title">Modo Parejas normal</div>
+                    <div class="content about">
+                        <table cellspacing="10" style="margin-top: 3px;"><tr>
+                            <td><img src="https://cdn.discordapp.com/attachments/843613696307757096/918171418120843344/1.png"></td>
+                            <td valign="top" style="color: white">
+                                COMO JUGAR:
+                                <p>
+                                RECOGE LOS TRES OBJETOS QUE APARECERAN DE FORMA ALEATORIA EN CADA ESCENA<br>
+                                JUGADOR 1 TENDRA LA PANTALLA IZQUIERDA Y SE MOVERA CON WASD Y RECOGERA CON Q<br>
+                                JUGADOR 2 TENDRA LA PANTALLA DERECHA Y SE MOVERA CON LAS FLECHAS DE NAVEGACION Y RECOGERA CON 1<br>
+                                GANA QUIEN ACUMULE MÃ¡S PUNTOS, LA ESCENA CAMBIARA CUANDO UNO DE LOS JUGADORES TERMINE DE RECOGER SUS OBJETOS
+                                <p/>
+ 
+                              <div class="quote"><h1><a href="./"><b>Volver al menu inicial</h1></div>
+                            </td>
+                        </tr></table>
+ 
+                        
+                    </div>
+                </div></td>
+ 
+ 
+                <td><div class="box" style="background: #FF959F; bottom: 0px; right: 0px;">
+                    <div class="title">Modo Parejas dificil</div>
+                    <div class="content about">
+                        <table cellspacing="10" style="margin-top: 3px;"><tr>
+                            <td><img src="https://cdn.discordapp.com/attachments/843613696307757096/918171418452176936/2.png"></td>
+                            <td valign="top" style="color: white">
+                                COMO JUGAR:
+                                <p>
+                                RECOGE LOS CINCO OBJETOS QUE APARECERAN DE FORMA ALEATORIA EN CADA ESCENA<br>
+                                JUGADOR 1 TENDRA LA PANTALLA IZQUIERDA Y SE MOVERA CON WASD Y RECOGERA CON Q<br>
+                                JUGADOR 2 TENDRA LA PANTALLA DERECHA Y SE MOVERA CON LAS FLECHAS DE NAVEGACION Y RECOGERA CON 1<br>
+                                GANA QUIEN ACUMULE MÃ¡S PUNTOS, LA ESCENA CAMBIARA CUANDO UNO DE LOS JUGADORES TERMINE DE RECOGER SUS OBJETOS
+                                <p/>
+                                   <div class="quote"><h1><a href="./"><b>Volver al menu inicial</h1></div>
+                            
+                            </td>
+                        </tr></table>
+ 
+                        
+                    </div>
+
+
+</html>
