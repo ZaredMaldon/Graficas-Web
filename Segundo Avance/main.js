@@ -969,12 +969,9 @@ class CharacterControllerDemo {
       //this._scene.getObjectByName("cuboflecha2").position.z=flechacion.position.z;
       }
       if(flechacion!=null && PosFlecha==true){
-        console.log("flecha");
-        console.log(flechacion.position.x);
-        console.log(flechacion.position.z);
-        console.log(flechacion.position.y);
+      
         if((jugador1.position.x-2) <= flechacion.position.x && (jugador1.position.x+2) >= flechacion.position.x){
-          console.log("puta1");
+          
           if((jugador1.position.z-2) <= flechacion.position.z && (jugador1.position.z+2) >= flechacion.position.z){
             console.log("colision");
             PosFlecha=false;
@@ -987,19 +984,19 @@ class CharacterControllerDemo {
       camera.position.set(jugador2.position.x,jugador2.position.y, jugador2.position.z);
       }
      if(i!=0 && Vida1!=0 && Vida2!=0){
-    this._scene.getObjectByName("planoj2").position.y=jugador2.position.y+20;
-    this._scene.getObjectByName("planoj2").position.x=jugador2.position.x;
-    this._scene.getObjectByName("planoj2").position.z=jugador2.position.z;
-    this._scene.getObjectByName("rplanoj2").position.y=jugador2.position.y+20;
-    this._scene.getObjectByName("rplanoj2").position.x=jugador2.position.x;
-    this._scene.getObjectByName("rplanoj2").position.z=jugador2.position.z;
-    this._scene.getObjectByName("planoj1").position.y=jugador1.position.y+20;
-    this._scene.getObjectByName("planoj1").position.x=jugador1.position.x;
-    this._scene.getObjectByName("planoj1").position.z=jugador1.position.z;
-    this._scene.getObjectByName("rplanoj1").position.y=jugador1.position.y+20;
-    this._scene.getObjectByName("rplanoj1").position.x=jugador1.position.x;
-    this._scene.getObjectByName("rplanoj1").position.z=jugador1.position.z;
-     }
+        this._scene.getObjectByName("planoj2").position.y=jugador2.position.y+20;
+        this._scene.getObjectByName("planoj2").position.x=jugador2.position.x;
+        this._scene.getObjectByName("planoj2").position.z=jugador2.position.z;
+        this._scene.getObjectByName("rplanoj2").position.y=jugador2.position.y+20;
+        this._scene.getObjectByName("rplanoj2").position.x=jugador2.position.x;
+        this._scene.getObjectByName("rplanoj2").position.z=jugador2.position.z;
+        this._scene.getObjectByName("planoj1").position.y=jugador1.position.y+20;
+        this._scene.getObjectByName("planoj1").position.x=jugador1.position.x;
+        this._scene.getObjectByName("planoj1").position.z=jugador1.position.z;
+        this._scene.getObjectByName("rplanoj1").position.y=jugador1.position.y+20;
+        this._scene.getObjectByName("rplanoj1").position.x=jugador1.position.x;
+        this._scene.getObjectByName("rplanoj1").position.z=jugador1.position.z;
+        }
      this.Colisiones();
       
       this._RAF();

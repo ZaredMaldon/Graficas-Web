@@ -1,12 +1,25 @@
-function Player(_nombre,_puntuacion){
-    this.nombre=_nombre;
-    this.puntuacion=_puntuacion;
+var Player=function(playerID){
+    this.playerID=playerID;
+    this.isMainPlayer=false;
+    this.mesh;
 
-    this.getPuntuacion=function(){
-        return _puntuacion;
-    }
+    var cube_geometry=new THREE.BoxGeometry(1,1,1);
+    var cube_material= new THREE.MeshBasicMaterial({color:0x7777ff,wireframe:false});
+    var scope=this;
 
-    this.AgregarPuntos=function(){
-        
-    }
+    this.init=function(){
+        scope.mesh=new THREE.Mesh(cube_geometry,cube_material);
+        screen.add(scope.mesh);
+        if(scope.isMainPlayer){//given player control of this mesh
+
+        }
+    };
+
+    this.setOrientation=function(position,rotation){
+        if(scope.mesh){
+            scope.mesh.position.copy(position);
+            scope.mesh.rotation.copy(rotation);
+        }
+    };
+
 }
